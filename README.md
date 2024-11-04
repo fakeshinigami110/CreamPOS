@@ -52,7 +52,6 @@ An interactive Kivy-based app for managing and ordering products, designed to be
 
     - Click on the `Edit Mode` switch to modify products.
     
-    ![editing](source/edit.gif)
     - Add new products with the "Add Product" button.
 - ### Placing Orders:
 
