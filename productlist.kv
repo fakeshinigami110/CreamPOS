@@ -1,0 +1,164 @@
+<ProductRow>:
+    canvas.before:
+        Color:
+            rgb: 1, 1, 0.9  # Light gray border color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 10
+        padding: 5
+        Label:
+            text: root.product_name
+            color: 0, 0, 0, 1  
+        Label:
+            text: root.product_price
+            color: 0, 0, 0, 1 
+        TextInput:
+            id: input_box
+            text: root.quantity_input
+            multiline: False
+            input_filter: 'int'
+            size_hint_x: 0.3
+            on_focus: self.text = "" if self.focus else self.text
+            on_text_validate: root.on_quantity_change(self, self.text)
+            background_color: 1, 1, 1, 1  
+            foreground_color: 0, 0, 0, 1  
+            padding: 5, 2
+            font_size: 14
+
+<ProductSelectionScreen>:
+    canvas.before:
+        Color:
+            rgb: 1, 1, 1  # White background
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 0
+        spacing: 0
+
+        Label:
+            text: 'Product Selection'
+            size_hint_y: None
+            height: '40dp'
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            color: 1, 1, 1, 1  # White text
+        Button:
+            text: "Edit"
+            size_hint_x: 0.1
+            on_release: root.open_product_manager()
+            halign: 'center'
+            valign: 'top'
+            color: 1, 1, 1, 1  # White text
+
+        RecycleView:
+            id: product_list
+            size_hint_y: 1
+            canvas.before:
+                Color:
+                    rgb: 0.9, 0.9, 0.9  # Light gray border color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size[0], self.size[1]
+            RecycleBoxLayout:
+                default_size: None, dp(40)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                canvas.before:
+                    Color:
+                        rgb: 0.9, 0.9, 0.9  # Light gray border color
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size[0], self.size[1]
+
+<ProductItem>:
+    orientation: 'horizontal'
+    spacing: dp(10)
+    Label:
+        text: root.name
+    Label:
+        text: f"${root.price}"
+    Button:
+        text: "✏️"
+        on_release: app.on_edit_product(root)
+    Button:
+        text: "🗑️"
+        on_release: app.on_delete_product(root)  # Button for deleting item
+
+<ProductManagerScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        ScrollView:
+            do_scroll_y: True
+            GridLayout:
+                id: product_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: dp(40)
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: "Add Product"
+                on_release: app.add_product()
+
+<ProductManagerModal>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Product Manager"
+            font_size: 20
+            size_hint_y: None
+            height: 40
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 40
+            Label:
+                text: "Enable Edit Mode"
+            Switch:
+                on_active: root.toggle_edit_mode(self, self.active)
+
+        ScrollView:  # Wraps product_box to allow scrolling
+            GridLayout:
+                id: product_box
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height  # Will expand to content height
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 40
+            TextInput:
+                id: new_product_name
+                hint_text: "Product Name"
+            TextInput:
+                id: new_product_price
+                hint_text: "Product Price"
+                input_filter: 'float'
+            Button:
+                text: "Add Product"
+                on_release: root.add_product(new_product_name.text, new_product_price.text)
+
+<ProductListView>:
+    viewclass: 'ProductRow'
+    RecycleGridLayout:
+        cols: 4
+        default_size: None, dp(40)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'lr-tb'

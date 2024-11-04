@@ -1,0 +1,84 @@
+<CustomTable>:
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        
+        # Header Row
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0.5, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            Label:
+                text: "Daily Order Number"
+                size_hint_x: 1/5
+                color: 1, 1, 1, 1
+                text_size: self.size
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Product and Quantity"
+                size_hint_x: 3/5
+                color: 1, 1, 1, 1
+                text_size: self.size
+                halign: 'center'
+                valign: 'middle'
+            Label:
+                text: "Client Table Number"
+                size_hint_x: 1/5
+                color: 1, 1, 1, 1
+                text_size: self.size
+                halign: 'center'
+                valign: 'middle'
+        
+        # Table Rows
+        ScrollView:
+            do_scroll_x: False
+            canvas.before:
+                Color:
+                    rgba: 0, 0.7, 0.4, 1
+                Line:
+                    rectangle: self.x, self.y, self.width, self.height
+                    width: 1
+            
+            BoxLayout:
+                id: table_grid
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 1
+                padding: 1
+                
+                canvas.before:
+                    Color:
+                        rgba: 0.4, 0.7, 0, 1
+                    Line:
+                        rectangle: self.x, self.y, self.width, self.height
+                        width: 1
+        
+        # Pagination Controls
+        # BoxLayout:
+        #     size_hint_y: None
+        #     height: '40dp'
+        #     spacing: '10dp'
+        #     padding: '10dp'
+        #     halign: 'center'
+        #     valign: 'middle'
+            
+        #     Button:
+        #         text: 'Previous'
+        #         on_release: root.load_previous_page()
+        #         background_color: 0.3, 0.3, 0.3, 1
+        #     Button:
+        #         text: 'Next'
+        #         on_release: root.load_next_page()
+        #         background_color: 0.3, 0.3, 0.3, 1
