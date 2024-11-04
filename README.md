@@ -32,7 +32,7 @@ An interactive Kivy-based app for managing and ordering products, designed to be
    ```
 2. Navigate to the project directory:
     ```bash
-    cd IceCreamApp
+    cd CreamPos
     ```
 3. Install required dependencies:
     ```bash
